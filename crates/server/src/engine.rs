@@ -138,10 +138,7 @@ impl<E: Embedder> Retriever for HybridEngine<E> {
         if request.use_cache && semantic {
             if let Some(cache) = &self.cache {
                 let t0 = Instant::now();
-                if let Some(mut hit) = cache
-                    .get_with_query_embedding(&request, emb_slice)
-                    .await?
-                {
+                if let Some(mut hit) = cache.get_with_query_embedding(&request, emb_slice).await? {
                     latency.record(Stage::Cache, t0.elapsed());
                     latency.record(Stage::Total, start.elapsed());
                     hit.cache_hit = true;

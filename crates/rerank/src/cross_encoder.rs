@@ -52,7 +52,11 @@ impl CrossEncoderReranker {
             .map_err(|e| RetrievaError::Rerank(format!("ort load: {e}")))?;
         // BGE-reranker (XLM-R) exports only `input_ids` + `attention_mask`.
         // Do not feed `token_type_ids` even if a tokenizer produces type ids.
-        let input_names: Vec<String> = session.inputs().iter().map(|i| i.name().to_string()).collect();
+        let input_names: Vec<String> = session
+            .inputs()
+            .iter()
+            .map(|i| i.name().to_string())
+            .collect();
         debug!(
             model = %model_path.display(),
             ?input_names,

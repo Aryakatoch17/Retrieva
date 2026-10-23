@@ -56,10 +56,7 @@ impl<E: Embedder + 'static> QueryCache for LayeredQueryCache<E> {
         match query_embedding {
             None => {
                 if let Some(exact) = &self.exact {
-                    if let Some(hit) = exact
-                        .get_with_query_embedding(request, None)
-                        .await?
-                    {
+                    if let Some(hit) = exact.get_with_query_embedding(request, None).await? {
                         self.hits.fetch_add(1, Ordering::Relaxed);
                         debug!("layered cache: exact hit");
                         return Ok(Some(hit));

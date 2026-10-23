@@ -42,11 +42,7 @@ pub struct MatrixReport {
 /// `HybridRerank` is omitted: hash MaxSim is a smoke test, not a quality row.
 /// Real CE / ColBERT numbers come from `rerank-ablate`.
 pub fn default_modes() -> Vec<SearchMode> {
-    vec![
-        SearchMode::Bm25,
-        SearchMode::Dense,
-        SearchMode::Hybrid,
-    ]
+    vec![SearchMode::Bm25, SearchMode::Dense, SearchMode::Hybrid]
 }
 
 /// Options for a matrix run.

@@ -1,20 +1,10 @@
 //! CE vs ColBERT-ONNX MaxSim quality+latency on a shared candidate pool (BEIR).
 
 use crate::beir::BeirDataset;
-use crate::eval::{run_beir_eval, BenchEmbedder, EvalOptions};
-use crate::metrics::mean_ndcg_at_k;
-use anyhow::{Context, Result};
-use retrieva_core::traits::{Embedder, Fusion, Reranker, SparseIndex};
-use retrieva_core::{CollectionId, Config, EmbeddingConfig, RerankConfig, SearchMode};
-use retrieva_fusion::fusion_from_config;
-use retrieva_index::{TantivySparseIndex, UsearchVectorIndex};
-use retrieva_ingest::HashEmbedder;
+use crate::eval::BenchEmbedder;
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
-use std::time::Instant;
-use tracing::info;
 
 /// How first-stage candidates are built.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -59,6 +49,7 @@ pub struct RerankAblateReport {
 }
 
 /// Run dense / hybrid baselines + CE / MaxSim on BEIR.
+#[allow(clippy::too_many_arguments)]
 pub async fn run_ce_vs_maxsim_beir(
     data_dir: &Path,
     dataset: &BeirDataset,
@@ -87,6 +78,7 @@ pub async fn run_ce_vs_maxsim_beir(
 }
 
 /// Full ablate with selectable candidate sources and optional MaxSim precompute.
+#[allow(clippy::too_many_arguments)]
 pub async fn run_rerank_ablate(
     data_dir: &Path,
     dataset: &BeirDataset,
@@ -119,8 +111,19 @@ pub async fn run_rerank_ablate(
     }
     #[cfg(feature = "onnx")]
     {
-        use retrieva_ingest::{chunk_text, OnnxEmbedder};
+        use crate::eval::{run_beir_eval, EvalOptions};
+        use crate::metrics::mean_ndcg_at_k;
+        use anyhow::Context;
+        use retrieva_core::traits::{Embedder, Fusion, Reranker, SparseIndex};
+        use retrieva_core::{CollectionId, Config, EmbeddingConfig, RerankConfig, SearchMode};
+        use retrieva_fusion::fusion_from_config;
+        use retrieva_index::{TantivySparseIndex, UsearchVectorIndex};
+        use retrieva_ingest::{chunk_text, HashEmbedder, OnnxEmbedder};
         use retrieva_rerank::{CrossEncoderReranker, IdentityReranker, OnnxMaxSimReranker};
+        use std::collections::HashMap;
+        use std::sync::Arc;
+        use std::time::Instant;
+        use tracing::info;
 
         let eval_opts = EvalOptions {
             collection: "rerank_ablate".into(),
@@ -343,7 +346,9 @@ pub fn write_rerank_ablate(out_dir: &Path, report: &RerankAblateReport) -> Resul
     ));
     md.push_str("| Candidates | Backend | nDCG@");
     md.push_str(&report.top_k.to_string());
-    md.push_str(" | mean latency (ms) | n |\n|-----------|---------|--------|------------------|---|\n");
+    md.push_str(
+        " | mean latency (ms) | n |\n|-----------|---------|--------|------------------|---|\n",
+    );
     for a in &report.arms {
         md.push_str(&format!(
             "| {} | {} | {:.4} | {:.2} | {} |\n",

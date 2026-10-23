@@ -93,7 +93,11 @@ impl OnnxMaxSimReranker {
             self.doc_tokens.insert(id.to_string(), Arc::new(toks));
             n += 1;
         }
-        info!(precomputed = n, cached = self.doc_tokens.len(), "MaxSim doc tokens");
+        info!(
+            precomputed = n,
+            cached = self.doc_tokens.len(),
+            "MaxSim doc tokens"
+        );
         Ok(n)
     }
 

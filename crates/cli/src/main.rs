@@ -387,10 +387,7 @@ async fn run_bench(
         "load" => {
             if let Some(path) = datasets.first() {
                 let ds = BeirDataset::load(path).context("load BEIR for load-test")?;
-                let name = path
-                    .file_name()
-                    .and_then(|s| s.to_str())
-                    .unwrap_or("beir");
+                let name = path.file_name().and_then(|s| s.to_str()).unwrap_or("beir");
                 let data_dir = config.data_dir.join(format!("bench_load_{name}"));
                 let mode = parse_mode(mode).unwrap_or(retrieva_core::SearchMode::Hybrid);
                 let load_opts = LoadOptions {
@@ -432,10 +429,9 @@ async fn run_bench(
             } else {
                 let data_dir = config.data_dir.join("bench_load");
                 let _ = std::fs::remove_dir_all(&data_dir);
-                let report =
-                    run_load_test(&data_dir, requests, concurrency, "rust bm25 retrieval")
-                        .await
-                        .context("load test")?;
+                let report = run_load_test(&data_dir, requests, concurrency, "rust bm25 retrieval")
+                    .await
+                    .context("load test")?;
                 let (json, md) = write_load(out_dir, "load_smoke", &report)?;
                 println!(
                     "load_smoke (not a capacity claim) ok={} err={} p50={:.2}ms p95={:.2}ms p99={:.2}ms qps={:.1}",
@@ -507,9 +503,9 @@ async fn run_bench(
             println!("wrote {}", path.display());
         }
         "rerank-ablate" => {
-            let path = datasets.first().ok_or_else(|| {
-                anyhow::anyhow!("--dataset required for suite=rerank-ablate")
-            })?;
+            let path = datasets
+                .first()
+                .ok_or_else(|| anyhow::anyhow!("--dataset required for suite=rerank-ablate"))?;
             let ds = BeirDataset::load(path).context("load BEIR for rerank-ablate")?;
             let data_dir = config.data_dir.join("bench_rerank_ablate");
             let report = run_ce_vs_maxsim_beir(
@@ -839,7 +835,10 @@ async fn run_ablate(
     let has_onnx_maxsim = arms.iter().any(|(n, _)| n == "maxsim_onnx");
     let has_ce = arms.iter().any(|(n, _)| n == "cross_encoder");
     if !has_onnx_maxsim {
-        arms.insert(0, ("maxsim_hash".into(), Arc::new(HashMaxSimReranker::new(32))));
+        arms.insert(
+            0,
+            ("maxsim_hash".into(), Arc::new(HashMaxSimReranker::new(32))),
+        );
         warn!("maxsim_onnx missing; using hash MaxSim (not a ColBERT quality claim)");
     }
     if arms.len() < 2 {

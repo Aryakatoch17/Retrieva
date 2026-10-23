@@ -6,8 +6,8 @@ use crate::report::EvalReport;
 use anyhow::{Context, Result};
 use retrieva_core::traits::{Embedder, Fusion, Retriever};
 use retrieva_core::{
-    Chunk, ChunkId, CollectionId, Config, Document, DocumentId, EmbeddingConfig, SearchFilters,
-    SearchMode, SearchRequest,
+    Chunk, ChunkId, CollectionId, Config, Document, DocumentId, SearchFilters, SearchMode,
+    SearchRequest,
 };
 use retrieva_index::IncrementalIndex;
 use retrieva_ingest::{chunk_text, HashEmbedder};
@@ -126,6 +126,7 @@ async fn run_beir_eval_onnx(
     }
     #[cfg(feature = "onnx")]
     {
+        use retrieva_core::EmbeddingConfig;
         use retrieva_ingest::OnnxEmbedder;
 
         std::fs::create_dir_all(data_dir)?;

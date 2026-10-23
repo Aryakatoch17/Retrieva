@@ -6,8 +6,8 @@ use crate::report::{percentile, LoadReport};
 use anyhow::{Context, Result};
 use retrieva_core::traits::{Embedder, Fusion, Retriever};
 use retrieva_core::{
-    Chunk, ChunkId, CollectionId, Config, Document, DocumentId, EmbeddingConfig, SearchFilters,
-    SearchMode, SearchRequest,
+    Chunk, ChunkId, CollectionId, Config, Document, DocumentId, SearchFilters, SearchMode,
+    SearchRequest,
 };
 use retrieva_index::IncrementalIndex;
 use retrieva_ingest::{chunk_text, HashEmbedder};
@@ -262,6 +262,7 @@ async fn run_beir_load_pair_onnx(
     }
     #[cfg(feature = "onnx")]
     {
+        use retrieva_core::EmbeddingConfig;
         use retrieva_ingest::OnnxEmbedder;
         use retrieva_rerank::{CrossEncoderReranker, IdentityReranker};
 
@@ -381,13 +382,7 @@ async fn run_beir_load_pair_onnx(
             &ds_note,
         )
         .await?;
-        let engine_on = Arc::new(build_onnx_engine(
-            &index,
-            doc_emb,
-            reranker,
-            50,
-            true,
-        )?);
+        let engine_on = Arc::new(build_onnx_engine(&index, doc_emb, reranker, 50, true)?);
         if let Some(c) = engine_on.cache() {
             c.reset_stats();
         }

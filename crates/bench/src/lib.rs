@@ -13,9 +13,7 @@ pub mod rerank_ablate;
 
 pub use beir::BeirDataset;
 pub use eval::{parse_mode, run_beir_eval, BenchEmbedder, EvalOptions};
-pub use loadtest::{
-    host_fingerprint, run_beir_load_pair, run_load_test, LoadOptions, QueryMix,
-};
+pub use loadtest::{host_fingerprint, run_beir_load_pair, run_load_test, LoadOptions, QueryMix};
 pub use matrix::{
     assert_hybrid_beats_singles, assess_hybrid, run_dataset_matrix, write_matrix, MatrixOptions,
     MatrixReport, ModeRow,
