@@ -1,0 +1,21 @@
+[package]
+name = "retrieva-cache"
+description = "Exact-match and semantic query cache for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+retrieva-core = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+parking_lot = { workspace = true }
+sha2 = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
+retrieva-ingest = { workspace = true }

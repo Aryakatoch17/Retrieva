@@ -1,0 +1,5 @@
+BM25 is a bag-of-words ranking function used by Tantivy for lexical retrieval.
+Dense retrieval embeds queries and documents into vectors and finds nearest
+neighbors with cosine similarity via usearch. Hybrid pipelines run both and fuse
+scores. Ownership and concurrency are strengths of the Rust programming language
+used to implement Retrieva.

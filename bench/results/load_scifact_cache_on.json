@@ -1,0 +1,15 @@
+{
+  "suite": "load_scifact_cache_on",
+  "requests": 200,
+  "concurrency": 8,
+  "ok": 200,
+  "err": 0,
+  "p50_ms": 0.0327,
+  "p95_ms": 10.337000000000002,
+  "p99_ms": 10.642000000000001,
+  "mean_ms": 3.0036579999999997,
+  "qps": 2472.777807313735,
+  "use_cache": true,
+  "notes": "BEIR scifact; docs=5183; chunks=5228; queries_pool=1109; mode=Hybrid; windows/x86_64 logical_cpus=16",
+  "created_at": "2026-10-23T03:49:44.920027100+00:00"
+}

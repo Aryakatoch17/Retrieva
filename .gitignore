@@ -1,0 +1,44 @@
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock.bak
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local config & data
+config/retrieva.toml
+data/
+data_onnx_*/
+*.db
+*.wal
+
+# Alternate cargo target dirs
+/target-msvc/
+
+# Models (downloaded ONNX weights — pin URLs in docs, don't commit binaries)
+models/
+*.onnx
+*.onnx.data
+!Dockerfile.onnx
+
+# Benchmark artifacts (checked-in tables live under bench/results/)
+bench/datasets/
+bench/.cache/
+
+# Regenerable large demo export (keep demo/corpus smoke set)
+demo/corpus_large/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Coverage / profiling
+*.profraw
+*.profdata
+lcov.info
+coverage/

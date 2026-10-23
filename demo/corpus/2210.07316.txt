@@ -1,0 +1,3 @@
+RankVicuna and Generative Reranking
+
+Listwise generative rerankers use large language models to reorder retrieval candidates for improved nDCG.

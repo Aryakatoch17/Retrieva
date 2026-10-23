@@ -1,0 +1,3 @@
+Retrieval-Augmented Generation for Knowledge-Intensive NLP
+
+Lewis et al. combine a parametric generator with a non-parametric dense retriever (RAG) for open-domain question answering.

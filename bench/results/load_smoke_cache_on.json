@@ -1,0 +1,19 @@
+{
+  "suite": "load_smoke_cache_on",
+  "requests": 200,
+  "concurrency": 4,
+  "ok": 200,
+  "err": 0,
+  "p50_ms": 0.003948,
+  "p95_ms": 0.007965999999999999,
+  "p99_ms": 0.175236,
+  "mean_ms": 0.009714575,
+  "qps": 67550.33766725042,
+  "use_cache": true,
+  "cache_hits": 195,
+  "cache_misses": 5,
+  "cache_hit_rate": 0.975,
+  "query_mix": "zipf",
+  "notes": "BEIR smoke; embedder=hash; docs=5; chunks=5; queries_pool=3; mode=Hybrid; mix=zipf; linux/x86_64 logical_cpus=16",
+  "created_at": "2026-10-23T17:21:33.892588081+00:00"
+}

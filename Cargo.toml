@@ -1,0 +1,123 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/ingest",
+    "crates/index",
+    "crates/fusion",
+    "crates/rerank",
+    "crates/cache",
+    "crates/server",
+    "crates/bench",
+    "crates/cli",
+]
+default-members = ["crates/cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.90"
+license = "Apache-2.0"
+authors = ["Retrieva Contributors"]
+repository = "https://github.com/Aryakatoch17/Retrieva"
+homepage = "https://github.com/Aryakatoch17/Retrieva"
+description = "Self-hostable hybrid RAG retrieval engine"
+readme = "README.md"
+
+[workspace.dependencies]
+# Internal crates
+retrieva-core = { path = "crates/core", version = "0.1.0" }
+retrieva-ingest = { path = "crates/ingest", version = "0.1.0" }
+retrieva-index = { path = "crates/index", version = "0.1.0" }
+retrieva-fusion = { path = "crates/fusion", version = "0.1.0" }
+retrieva-rerank = { path = "crates/rerank", version = "0.1.0" }
+retrieva-cache = { path = "crates/cache", version = "0.1.0" }
+retrieva-server = { path = "crates/server", version = "0.1.0" }
+retrieva-bench = { path = "crates/bench", version = "0.1.0" }
+
+# Async / runtime
+tokio = { version = "1.47", features = ["rt-multi-thread", "macros", "sync", "fs", "time", "io-util"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# Serialization / config
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+figment = { version = "0.10.19", features = ["toml", "env"] }
+
+# Errors / logging
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-opentelemetry = "0.34"
+opentelemetry = "0.33"
+opentelemetry_sdk = { version = "0.33", features = ["rt-tokio"] }
+opentelemetry-otlp = "0.33"
+
+# IDs / time
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# CLI
+clap = { version = "4", features = ["derive", "env"] }
+
+# HTTP / gRPC (later phases)
+axum = "0.8"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["trace", "cors", "limit"] }
+tonic = "0.14"
+tonic-build = "0.14"
+tonic-prost = "0.14"
+tonic-prost-build = "0.14"
+prost = "0.14"
+http = "1"
+hyper = "1"
+
+# Search / storage (later phases)
+tantivy = "0.27"
+usearch = "2.26"
+rocksdb = "0.25"
+moka = { version = "0.12", features = ["future"] }
+
+# ONNX Runtime — exact RC pin; enable via `onnx` feature on consuming crates
+# Note: ort 2.0.0-rc.15 declares rust-version 1.92; default (non-onnx) builds keep MSRV 1.90.
+ort = { version = "=2.0.0-rc.15", default-features = false, features = ["std", "ndarray", "download-binaries", "tls-native", "copy-dylibs", "tracing"] }
+
+# HuggingFace tokenizers (ONNX embedder)
+tokenizers = { version = "0.21", default-features = false, features = ["onig"] }
+ndarray = "0.16"
+
+# Metrics (later phases)
+metrics = "0.24"
+metrics-exporter-prometheus = "0.16"
+
+# HTTP client / testing
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+tempfile = "3"
+proptest = "1"
+criterion = "0.5"
+tokio-test = "0.4"
+tower-test = "0.4"
+
+# Ingest / utilities
+walkdir = "2"
+unicode-segmentation = "1"
+pdf-extract = "0.7"
+parking_lot = "0.12"
+sha2 = "0.10"
+hex = "0.4"
+dashmap = "6"
+governor = "0.8"
+axum-extra = { version = "0.10", features = ["typed-header"] }
+prometheus = "0.14"
+bytes = "1"
+tokio-stream = "0.1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+[profile.bench]
+inherits = "release"

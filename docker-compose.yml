@@ -1,0 +1,44 @@
+# Retrieva demo stack: API + optional Prometheus scrape.
+#
+#   docker compose up --build
+#   curl http://localhost:8080/health
+#   docker compose exec retrieva retrieva ingest --collection demo /app/demo/docs
+#   curl -s http://localhost:8080/v1/search -H 'content-type: application/json' \
+#     -d '{"collection_id":"demo","query":"hybrid BM25 dense","top_k":5,"mode":"hybrid"}'
+
+services:
+  retrieva:
+    build: .
+    image: retrieva:local
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    volumes:
+      - retrieva-data:/app/data
+    environment:
+      RETRIEVA_LOGGING__LEVEL: info
+      RETRIEVA_LOGGING__FORMAT: json
+      # RETRIEVA_SERVER__API_KEY: change-me
+      # RETRIEVA_SERVER__RATE_LIMIT_RPS: "100"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: ["metrics"]
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      retrieva:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  retrieva-data:

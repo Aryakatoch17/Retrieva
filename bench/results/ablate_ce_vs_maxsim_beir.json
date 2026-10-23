@@ -1,0 +1,25 @@
+{
+  "dataset": "/src/bench/datasets/scifact/scifact",
+  "candidate_pool": 50,
+  "top_k": 10,
+  "candidate_source": "hybrid onnx/bge-small dense",
+  "arms": [
+    {
+      "backend": "maxsim_onnx",
+      "ndcg_at_k": 0.7019943806115493,
+      "mean_latency_ms": 3260.167328860001,
+      "n_queries": 300
+    },
+    {
+      "backend": "cross_encoder",
+      "ndcg_at_k": 0.701620431396839,
+      "mean_latency_ms": 14963.633172246658,
+      "n_queries": 300
+    }
+  ],
+  "notes": [
+    "Same hybrid candidate pool per query for both arms.",
+    "maxsim_onnx = answerai-colbert-small-v1 Vespa ONNX (not hash MaxSim).",
+    "cross_encoder = bge-reranker-base."
+  ]
+}

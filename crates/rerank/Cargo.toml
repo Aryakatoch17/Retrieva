@@ -1,0 +1,31 @@
+[package]
+name = "retrieva-rerank"
+description = "Cross-encoder and late-interaction rerankers for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+# ONNX Runtime inference for cross-encoder (Phase 4) and MaxSim (Phase 5).
+# Requires rustc >= 1.92 (ort MSRV). Shares ORT env via retrieva-ingest.
+onnx = ["dep:ort", "dep:tokenizers", "dep:parking_lot", "dep:dashmap", "dep:retrieva-ingest", "retrieva-ingest/onnx"]
+cuda = ["onnx", "retrieva-ingest/cuda", "ort/cuda"]
+
+[dependencies]
+retrieva-core = { workspace = true }
+retrieva-ingest = { workspace = true, optional = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+serde = { workspace = true }
+ort = { workspace = true, optional = true }
+tokenizers = { workspace = true, optional = true }
+parking_lot = { workspace = true, optional = true }
+dashmap = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true }

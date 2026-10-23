@@ -1,0 +1,5 @@
+{"_id":"d1","title":"Rust programming","text":"Rust is a systems programming language focused on safety and concurrency with ownership."}
+{"_id":"d2","title":"Python web","text":"Flask and Django are popular Python web frameworks for building HTTP APIs."}
+{"_id":"d3","title":"Retrieval augmented generation","text":"Hybrid retrieval combines BM25 sparse search with dense vector ANN for RAG pipelines."}
+{"_id":"d4","title":"Cooking pasta","text":"Boil water, add salt, then cook spaghetti until al dente before serving with sauce."}
+{"_id":"d5","title":"Vector databases","text":"Approximate nearest neighbor indexes such as HNSW and usearch store dense embeddings."}

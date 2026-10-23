@@ -1,0 +1,12 @@
+{
+  "suite": "cache_off",
+  "dataset": "bench/fixtures/smoke",
+  "mode": "Bm25",
+  "top_k": 10,
+  "n_queries": 3,
+  "ndcg_at_k": 1.0,
+  "recall_at_k": 1.0,
+  "mrr": 1.0,
+  "search_ms_total": 0.8574,
+  "created_at": "2026-10-22T13:44:24.877165300+00:00"
+}

@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "dataset": "scifact",
+      "mode": "Bm25",
+      "ndcg_at_k": 0.6611712470207436,
+      "recall_at_k": 0.7876111111111112,
+      "mrr": 0.6276481481481481
+    },
+    {
+      "dataset": "scifact",
+      "mode": "Dense",
+      "ndcg_at_k": 0.684542669540545,
+      "recall_at_k": 0.798,
+      "mrr": 0.6550198412698413
+    },
+    {
+      "dataset": "scifact",
+      "mode": "Hybrid",
+      "ndcg_at_k": 0.6672924401804049,
+      "recall_at_k": 0.7982777777777779,
+      "mrr": 0.6321269841269841
+    },
+    {
+      "dataset": "scifact",
+      "mode": "HybridRerank",
+      "ndcg_at_k": 0.38708410754970957,
+      "recall_at_k": 0.5236111111111111,
+      "mrr": 0.3483015873015873
+    }
+  ],
+  "hybrid_ok": false,
+  "notes": [
+    "scifact: MIXED hybrid=0.6673 bm25=0.6612 dense=0.6845 (no ≥0.01 gain over best single; normal when BM25 is strong)"
+  ],
+  "embedder": "onnx"
+}

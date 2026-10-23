@@ -1,0 +1,16 @@
+[package]
+name = "retrieva-fusion"
+description = "Reciprocal Rank Fusion and weighted score fusion for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+retrieva-core = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

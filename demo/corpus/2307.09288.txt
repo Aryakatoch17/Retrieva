@@ -1,0 +1,3 @@
+Hybrid Retrieval and Fusion
+
+Hybrid pipelines fuse BM25 lexical ranks with dense ANN neighbors using reciprocal rank fusion before late interaction or cross-encoder reranking.

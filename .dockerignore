@@ -1,0 +1,17 @@
+target/
+.git/
+.idea/
+.vscode/
+data/
+models/
+bench/datasets/
+bench/results/
+bench/.cache/
+**/*.onnx
+**/*.onnx.data
+config/retrieva.toml
+.venv/
+venv/
+__pycache__/
+*.pyc
+agent-transcripts/

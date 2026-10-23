@@ -1,0 +1,47 @@
+[package]
+name = "retrieva-server"
+description = "REST (axum) and gRPC (tonic) servers for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+onnx = ["retrieva-ingest/onnx", "retrieva-rerank/onnx"]
+cuda = ["onnx", "retrieva-ingest/cuda", "retrieva-rerank/cuda"]
+otel = ["retrieva-core/otel"]
+
+[dependencies]
+retrieva-core = { workspace = true }
+retrieva-ingest = { workspace = true }
+retrieva-index = { workspace = true }
+retrieva-fusion = { workspace = true }
+retrieva-rerank = { workspace = true }
+retrieva-cache = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true, features = ["util"] }
+tower-http = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tonic = { workspace = true }
+tonic-prost = { workspace = true }
+prost = { workspace = true }
+prometheus = { workspace = true }
+parking_lot = { workspace = true }
+governor = { workspace = true }
+
+[build-dependencies]
+tonic-prost-build = { workspace = true }
+protoc-bin-vendored = "3"
+
+[dev-dependencies]
+tokio = { workspace = true }
+tempfile = { workspace = true }
+tower = { workspace = true, features = ["util"] }

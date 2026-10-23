@@ -1,0 +1,33 @@
+{
+  "query": "dense passage retrieval for open domain question answering",
+  "candidate_count": 8,
+  "corpus": "demo/corpus arxiv (8 abstracts, hash-indexed)",
+  "hardware": "Docker Ubuntu 24.04 / retrieva-onnx:builder (CPU)",
+  "notes": "maxsim_hash = HashMaxSimReranker (not ColBERT ONNX). cross_encoder = BAAI/bge-reranker-base ONNX. Identity arm omitted when CE loads.",
+  "arms": [
+    {
+      "backend": "maxsim_hash",
+      "ranking": [
+        "2004.04906.txt#0",
+        "2005.11401.txt#0",
+        "2307.09288.txt#0",
+        "1409.0473.txt#0",
+        "2104.08663.txt#0"
+      ],
+      "top_score": 8.000001,
+      "latency_ms": 0.357198
+    },
+    {
+      "backend": "cross_encoder",
+      "ranking": [
+        "2004.04906.txt#0",
+        "2005.11401.txt#0",
+        "2104.08663.txt#0",
+        "2307.09288.txt#0",
+        "2210.07316.txt#0"
+      ],
+      "top_score": 4.9850655,
+      "latency_ms": 361.989822
+    }
+  ]
+}

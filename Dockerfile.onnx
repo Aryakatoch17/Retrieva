@@ -1,0 +1,19 @@
+# ONNX builder: link against Ubuntu 24.04 glibc (>= 2.38) while reusing the
+# already-pulled rust:1.99-bookworm toolchain (avoids another rustup download).
+FROM rust:1.99-bookworm AS rust_toolchain
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      build-essential cmake pkg-config libssl-dev clang ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY --from=rust_toolchain /usr/local/cargo /usr/local/cargo
+COPY --from=rust_toolchain /usr/local/rustup /usr/local/rustup
+ENV PATH=/usr/local/cargo/bin:$PATH \
+    RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo
+
+WORKDIR /src

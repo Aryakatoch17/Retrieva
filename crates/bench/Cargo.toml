@@ -1,0 +1,35 @@
+[package]
+name = "retrieva-bench"
+description = "BEIR eval harness, metrics, and load tests for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+# Wire OnnxEmbedder / OnnxMaxSim / CrossEncoder into BEIR matrix, load, ablate.
+onnx = ["retrieva-ingest/onnx", "retrieva-rerank/onnx"]
+cuda = ["onnx", "retrieva-ingest/cuda", "retrieva-rerank/cuda"]
+
+[dependencies]
+retrieva-core = { workspace = true }
+retrieva-ingest = { workspace = true }
+retrieva-index = { workspace = true }
+retrieva-fusion = { workspace = true }
+retrieva-rerank = { workspace = true }
+retrieva-cache = { workspace = true }
+retrieva-server = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+async-trait = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+tokio = { workspace = true }

@@ -1,0 +1,3 @@
+BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of IR Models
+
+Thakur et al. release BEIR, a suite of diverse retrieval datasets for evaluating sparse and dense models out of domain.

@@ -1,0 +1,4 @@
+Operational features include a filesystem document store, append-only WAL with
+checkpointing for crash recovery, API-key authentication, per-process rate
+limits, Prometheus metrics at GET /metrics, and optional OpenTelemetry OTLP
+export when built with the otel feature.

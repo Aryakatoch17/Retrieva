@@ -1,0 +1,34 @@
+[package]
+name = "retrieva-cli"
+description = "Command-line interface for Retrieva"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "retrieva"
+path = "src/main.rs"
+
+[features]
+default = []
+onnx = ["retrieva-server/onnx", "retrieva-ingest/onnx", "retrieva-rerank/onnx", "retrieva-bench/onnx"]
+cuda = ["onnx", "retrieva-ingest/cuda", "retrieva-rerank/cuda", "retrieva-bench/cuda"]
+otel = ["retrieva-core/otel", "retrieva-server/otel"]
+
+[dependencies]
+retrieva-core = { workspace = true }
+retrieva-ingest = { workspace = true }
+retrieva-index = { workspace = true }
+retrieva-fusion = { workspace = true }
+retrieva-rerank = { workspace = true }
+retrieva-cache = { workspace = true }
+retrieva-server = { workspace = true }
+retrieva-bench = { workspace = true }
+anyhow = { workspace = true }
+clap = { workspace = true }
+tracing = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }

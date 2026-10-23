@@ -1,0 +1,3 @@
+Attention Is All You Need
+
+Vaswani et al. propose the Transformer architecture based solely on self-attention, enabling parallel training and strong translation quality.

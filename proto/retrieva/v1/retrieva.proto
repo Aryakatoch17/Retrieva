@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package retrieva.v1;
+
+// Hybrid RAG retrieval service.
+service Retrieva {
+  // Liveness check.
+  rpc Health (HealthRequest) returns (HealthResponse);
+
+  // Run a search against a collection.
+  rpc Search (SearchRequest) returns (SearchResponse);
+
+  // Ingest documents from a filesystem path on the server.
+  rpc Ingest (IngestRequest) returns (IngestResponse);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  string version = 2;
+}
+
+message SearchRequest {
+  string collection_id = 1;
+  string query = 2;
+  uint32 top_k = 3;
+  // bm25 | dense | hybrid | hybrid+rerank
+  string mode = 4;
+  uint32 rerank_top_n = 5;
+  bool use_cache = 6;
+  map<string, string> metadata_eq = 7;
+}
+
+message ScoreBreakdown {
+  optional float bm25 = 1;
+  optional float dense = 2;
+  optional float fusion = 3;
+  optional float rerank = 4;
+  float final_score = 5;
+}
+
+message ScoredChunk {
+  string chunk_id = 1;
+  string document_id = 2;
+  string collection_id = 3;
+  string text = 4;
+  uint32 ordinal = 5;
+  map<string, string> metadata = 6;
+  ScoreBreakdown scores = 7;
+}
+
+message LatencyBreakdown {
+  double cache_ms = 1;
+  double bm25_ms = 2;
+  double dense_ms = 3;
+  double fusion_ms = 4;
+  double embed_ms = 5;
+  double rerank_ms = 6;
+  double total_ms = 7;
+}
+
+message SearchResponse {
+  repeated ScoredChunk results = 1;
+  LatencyBreakdown latency = 2;
+  bool cache_hit = 3;
+}
+
+message IngestRequest {
+  string collection_id = 1;
+  // Filesystem path (file or directory) relative to the server process.
+  string path = 2;
+}
+
+message IngestResponse {
+  string collection_id = 1;
+  uint32 files_ok = 2;
+  uint32 files_skipped = 3;
+  uint32 documents = 4;
+  uint32 chunks = 5;
+}

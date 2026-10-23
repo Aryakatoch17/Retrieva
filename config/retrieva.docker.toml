@@ -1,0 +1,46 @@
+# Config baked into the Docker image (override with RETRIEVA_* env vars).
+
+data_dir = "/app/data"
+
+[logging]
+level = "info"
+format = "json"
+
+[server]
+host = "0.0.0.0"
+port = 8080
+grpc_port = 50051
+rate_limit_rps = 0
+
+[search]
+default_top_k = 10
+candidate_pool = 100
+fusion = "rrf"
+rrf_k = 60
+bm25_weight = 0.5
+dense_weight = 0.5
+
+[ingest]
+chunk_size = 512
+chunk_overlap = 64
+
+[embedding]
+model_path = "models/bge-small-en-v1.5/model.onnx"
+model_id = "BAAI/bge-small-en-v1.5"
+dimensions = 384
+batch_size = 32
+
+[rerank]
+backend = "maxsim"
+cross_encoder_path = "models/bge-reranker-base/model.onnx"
+cross_encoder_id = "BAAI/bge-reranker-base"
+maxsim_path = "models/colbert/model.onnx"
+top_n = 50
+batch_size = 16
+
+[cache]
+exact_enabled = true
+semantic_enabled = true
+exact_capacity = 10000
+semantic_threshold = 0.97
+ttl_secs = 3600
